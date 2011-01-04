@@ -1,3 +1,7 @@
 # NiceJSON-PHP
 
 Small lib to nicely format JSON strings with PHP
+
+## Credits
+
+* recursive-design.com: http://recursive-design.com/blog/2008/03/11/format-json-with-php/
