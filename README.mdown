@@ -1,0 +1,3 @@
+# NiceJSON-PHP
+
+Small lib to nicely format JSON strings with PHP

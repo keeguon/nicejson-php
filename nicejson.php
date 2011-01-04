@@ -1,11 +1,11 @@
 <?
 /**
-* Indents a flat JSON string to make it more human-readable
+* Formate a flat JSON string to make it more human-readable
 *
 * @param string $json The original JSON string to process
 * @return string Indented version of the original JSON string
 */
-function indent($json)
+function json_format($json)
 {
   $result = '';
   $pos = 0;
@@ -52,6 +52,7 @@ function indent($json)
   return $result;
 }
 
-$file = dirname(__FILE__).'/profile.json';
+// Example usage (use php-cli)
+$file = dirname(__FILE__).'/example.json';
 $json = file_get_contents($file);
-print_r(indent($json));
+print_r(json_format($json));
