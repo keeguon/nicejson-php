@@ -19,7 +19,7 @@ function json_format($json) {
     $json = json_encode($json);
   }
   $result      = '';
-  $pos         = 0;
+  $pos         = 0;               // indentation level
   $strLen      = strlen($json);
   $indentStr   = '  ';
   $newLine     = "\n";
@@ -43,8 +43,17 @@ function json_format($json) {
         $result .= $indentStr;
       }
     }
+    // eat all non-essential whitespace in the input as we do our own here and it would only mess up our process
+    else if (false !== strpos(" \t\r\n", $char)) {
+      continue;
+    }
+
     // Add the character to the result string
     $result .= $char;
+    // always add a space after a field colon:
+    if ($char == ':' && $outOfQuotes) {
+      $result .= ' ';
+    }
 
     // If the last character was the beginning of an element,
     // output a new line and indent the next line
