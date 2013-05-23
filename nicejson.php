@@ -1,4 +1,5 @@
-<?
+<?php
+
 /**
 * Formate a flat JSON string to make it more human-readable
 *
@@ -52,7 +53,3 @@ function json_format($json)
   return $result;
 }
 
-// Example usage (use php-cli)
-$file = dirname(__FILE__).'/example.json';
-$json = file_get_contents($file);
-print_r(json_format($json));
