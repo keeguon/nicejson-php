@@ -25,10 +25,10 @@ function json_format($json)
     }
     // If this character is the end of an element, 
     // output a new line and indent the next line
-    else if(($char == '}' || $char == ']') && $outOfQuotes) {
+    else if (($char == '}' || $char == ']') && $outOfQuotes) {
       $result .= $newLine;
       $pos--;
-      for ($j=0; $j<$pos; $j++) {
+      for ($j = 0; $j < $pos; $j++) {
         $result .= $indentStr;
       }
     }
