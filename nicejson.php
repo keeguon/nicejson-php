@@ -12,10 +12,10 @@
 * @return string Indented version of the original JSON string
 */
 function json_format($json) {
-  if (phpversion() && phpversion() >= 5.4) {
-    return json_encode($json, JSON_PRETTY_PRINT);
-  }
   if (!is_string($json)) {
+    if (phpversion() && phpversion() >= 5.4) {
+      return json_encode($json, JSON_PRETTY_PRINT);
+    }
     $json = json_encode($json);
   }
   $result      = '';
