@@ -4,7 +4,7 @@
 // adapted to allow native functionality in php version >= 5.4.0
 
 /**
-* Formate a flat JSON string to make it more human-readable
+* Format a flat JSON string to make it more human-readable
 *
 * @param string $json The original JSON string to process
 *        When the input is not a string it is assumed the input is RAW
@@ -44,7 +44,7 @@ function json_format($json) {
       }
     }
     // eat all non-essential whitespace in the input as we do our own here and it would only mess up our process
-    else if (false !== strpos(" \t\r\n", $char)) {
+    else if ($outOfQuotes && false !== strpos(" \t\r\n", $char)) {
       continue;
     }
 
