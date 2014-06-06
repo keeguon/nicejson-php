@@ -1,0 +1,50 @@
+########################################
+# Locale settings
+########################################
+
+# See: http://php.net/manual/en/timezones.php
+php_value date.timezone "Europe/Amsterdam"
+
+SetEnv   LC_ALL  nl_NL.UTF-8
+
+########################################
+# Set up UTF-8 encoding
+########################################
+
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .php
+
+php_value default_charset "UTF-8"
+
+php_value iconv.input_encoding "UTF-8"
+php_value iconv.internal_encoding "UTF-8"
+php_value iconv.output_encoding "UTF-8"
+
+php_value mbstring.internal_encoding UTF-8
+php_value mbstring.http_output UTF-8
+php_value mbstring.encoding_translation On
+php_value mbstring.func_overload 6
+
+# See also php functions:
+# mysql_set_charset
+# mysql_client_encoding
+
+# database settings
+#CREATE DATABASE db_name
+#   CHARACTER SET utf8
+#   DEFAULT CHARACTER SET utf8
+#   COLLATE utf8_general_ci
+#   DEFAULT COLLATE utf8_general_ci
+#   ;
+#
+#ALTER DATABASE db_name
+#   CHARACTER SET utf8
+#   DEFAULT CHARACTER SET utf8
+#   COLLATE utf8_general_ci
+#   DEFAULT COLLATE utf8_general_ci
+#   ;
+
+#ALTER TABLE tbl_name
+#   DEFAULT CHARACTER SET utf8
+#   COLLATE utf8_general_ci
+#   ;

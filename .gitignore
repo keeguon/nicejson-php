@@ -1,0 +1,6 @@
+# Apple MAC cruft
+.DS_Store
+
+# Editor backup files
+*.bak
+*~
