@@ -27,16 +27,35 @@ function json_format($json) {
   $outOfQuotes = true;
 
   for ($i = 0; $i < $strLen; $i++) {
+    // Speedup: copy blocks of input which don't matter re string detection and formatting.
+    $copyLen = strcspn($json, $outOfQuotes ? " \t\r\n\",:[{}]" : "\\\"", $i);
+    if ($copyLen >= 1) {
+      $copyStr = substr($json, $i, $copyLen);
+      // Also reset the tracker for escapes: we won't be hitting any right now
+      // and the next round is the first time an 'escape' character can be seen again at the input.
+      $prevChar = '';
+      $result .= $copyStr;
+      $i += $copyLen - 1;      // correct for the for(;;) loop
+      continue;
+    }
+    
     // Grab the next character in the string
     $char = substr($json, $i, 1);
-
-    // Are we inside a quoted string?
-    if ($char == '"' && $prevChar != '\\') {
+    
+    // Are we inside a quoted string encountering an escape sequence?
+    if (!$outOfQuotes && $prevChar === '\\') {
+      // Add the escaped character to the result string and ignore it for the string enter/exit detection:
+      $result .= $char;
+      $prevChar = '';
+      continue;
+    }
+    // Are we entering/exiting a quoted string?
+    if ($char === '"' && $prevChar !== '\\') {
       $outOfQuotes = !$outOfQuotes;
     }
     // If this character is the end of an element,
     // output a new line and indent the next line
-    else if (($char == '}' || $char == ']') && $outOfQuotes) {
+    else if ($outOfQuotes && ($char === '}' || $char === ']')) {
       $result .= $newLine;
       $pos--;
       for ($j = 0; $j < $pos; $j++) {
@@ -51,15 +70,15 @@ function json_format($json) {
     // Add the character to the result string
     $result .= $char;
     // always add a space after a field colon:
-    if ($char == ':' && $outOfQuotes) {
+    if ($outOfQuotes && $char === ':') {
       $result .= ' ';
     }
 
     // If the last character was the beginning of an element,
     // output a new line and indent the next line
-    if (($char == ',' || $char == '{' || $char == '[') && $outOfQuotes) {
+    else if ($outOfQuotes && ($char === ',' || $char === '{' || $char === '[')) {
       $result .= $newLine;
-      if ($char == '{' || $char == '[') {
+      if ($char === '{' || $char === '[') {
         $pos++;
       }
       for ($j = 0; $j < $pos; $j++) {
